@@ -30,24 +30,28 @@ export class Pipeline extends Stack {
       actionName: 'Build',
       input: artifact,
       project: new aws_codebuild.Project(this, 'CodeBuild', {
+        environment: {
+          buildImage: aws_codebuild.LinuxBuildImage.STANDARD_7_0,
+        },
         buildSpec: aws_codebuild.BuildSpec.fromObject({
           version: '0.2',
           phases: {
             install: {
               "runtime-versions": {
-                "nodejs": 18
+                "nodejs": '18.x'
               },
               commands: [
                 'node -v',
-                'npm i -g npm@latest',
+                'npm i -g npm@9.5.1',
                 'npm -v',
                 'npm ci',
               ],
             },
             build: {
               commands: [
-                'npm run build -w hosting',
-                'npm run synth -w hosting',
+                'cd packages/hosting',
+                'npm run build',
+                'npx cdk synth',
               ],
             },
         }}),
