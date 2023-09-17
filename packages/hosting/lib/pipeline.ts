@@ -26,7 +26,7 @@ export class Pipeline extends Stack {
           'node -v',
           'npm ci -w hosting',
           'npm run build -w hosting',
-          'npm run cdk synth -w hosting',
+          'npm run synth -w hosting',
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
       }),
