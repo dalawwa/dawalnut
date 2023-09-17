@@ -2,22 +2,12 @@ import { Stack, StackProps, pipelines } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
-      codeBuildDefaults: {
-        rolePolicy: [
-          new PolicyStatement({
-            effect: Effect.ALLOW,
-            actions: ['*'],
-            resources: ['*'],
-          }),
-        ],
-      },
-      synth: new pipelines.ShellStep('Synth', {
+      synth: new pipelines.CodeBuildStep('Synth', {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
