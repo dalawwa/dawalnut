@@ -51,7 +51,7 @@ export class Pipeline extends Stack {
               commands: [
                 'cd packages/hosting',
                 'npm run build',
-                'npx cdk synth',
+                'npm run synth',
               ],
             },
         }}),
