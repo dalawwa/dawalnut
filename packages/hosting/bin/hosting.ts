@@ -10,3 +10,4 @@ new Pipeline(app, 'MySite', {
     region: process.env.AWS_REGION,
   }
 });
+app.synth();
