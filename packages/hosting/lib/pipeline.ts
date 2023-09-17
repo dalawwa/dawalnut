@@ -21,6 +21,9 @@ export class Pipeline extends Stack {
         primaryOutputDirectory: 'packages/hosting/cdk.out',
       }),
     });
+    pipeline.synthProject.role?.addManagedPolicy({
+      managedPolicyArn: 'arn:aws:iam::aws:policy/AdministratorAccess',
+    });
 
     pipeline.addStage(new DevStage(this, 'Dev', {
       env: {
