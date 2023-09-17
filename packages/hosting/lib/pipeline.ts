@@ -11,8 +11,9 @@ export class Pipeline extends Stack {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
-        installCommands: ['npm i -g npm@latest'],
+        installCommands: ['npm i -g npm@9.6.7'],
         commands: [
+          'node -v',
           'npm ci -w hosting',
           'npm run build:hosting',
           'npx cdk synth:hosting',
