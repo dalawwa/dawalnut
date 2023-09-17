@@ -32,6 +32,13 @@ export class Pipeline extends Stack {
     role.addToPolicy(
         policyStatement,
     );
+    role.addToPolicy(
+      new PolicyStatement({
+        actions: ['sts:AssumeRole'],
+        effect: Effect.ALLOW,
+        resources: [process.env.PIPELINE_ROLE_ARN!],
+      })
+    )
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
       role: role.withoutPolicyUpdates(),
       synth: new pipelines.ShellStep('Synth', {
