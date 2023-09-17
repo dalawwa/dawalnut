@@ -1,4 +1,4 @@
-import { Stack, StackProps, aws_codepipeline_actions, aws_codebuild} from "aws-cdk-lib";
+import { Stack, StackProps, aws_codepipeline_actions, aws_codebuild, Stage} from "aws-cdk-lib";
 import { LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
 import { CodePipeline, ShellStep, CodePipelineSource } from "aws-cdk-lib/pipelines";
 import { Construct } from "constructs";
@@ -21,7 +21,7 @@ export class Pipeline extends Stack {
           'npm run build',
           'npm run synth',
         ],
-        primaryOutputDirectory: 'packages/hosting/cdk.out'
+        primaryOutputDirectory: '${CODEBUILD_SRC_DIR}/packages/hosting/cdk.out'
       }),
       codeBuildDefaults: {
         buildEnvironment: {
@@ -29,5 +29,19 @@ export class Pipeline extends Stack {
         },
       },
     });
+
+    pipeline.addStage(new Stage(this, 'Dev', {
+      env: {
+        account: process.env.AWS_ACCOUNT!,
+        region: process.env.AWS_REGION!,
+      },
+    }));
+
+    pipeline.addStage(new Stage(this, 'Prod', {
+      env: {
+        account: process.env.AWS_ACCOUNT!,
+        region: process.env.AWS_REGION!,
+      },
+    }));
   }
 }
