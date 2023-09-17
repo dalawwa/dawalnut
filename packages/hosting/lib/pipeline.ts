@@ -32,10 +32,14 @@ export class Pipeline extends Stack {
       project: new aws_codebuild.Project(this, 'CodeBuild', {
         buildSpec: aws_codebuild.BuildSpec.fromObject({
           version: '0.2',
+          environment: {
+            buildImage: aws_codebuild.LinuxBuildImage.STANDARD_7_0,
+          },
           phases: {
             install: {
               commands: [
-                'npm install -g npm@latest',
+                'node -v',
+                'npm -v',
                 'npm ci',
               ],
             },
