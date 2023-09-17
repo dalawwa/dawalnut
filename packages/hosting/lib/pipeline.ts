@@ -8,7 +8,7 @@ export class Pipeline extends Stack {
     super(scope, id, props);
 
     const role = new Role(this, 'Role', {
-      assumedBy: new ServicePrincipal('codebuild.amazonaws.com'),
+      assumedBy: new ServicePrincipal('codepipeline.amazonaws.com'),
     });
 
     role.addToPolicy(new PolicyStatement({
@@ -16,7 +16,8 @@ export class Pipeline extends Stack {
         "sts:AssumeRole",
         "secretsmanager:GetSecretValue",
         "secretsmanager:DescribeSecret",
-        "cloudformation:*"
+        "cloudformation:*",
+        "s3:*",
       ],
       resources: ['*'],
     }));
@@ -36,6 +37,24 @@ export class Pipeline extends Stack {
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
       }),
+      dockerEnabledForSynth: true,
+      dockerEnabledForSelfMutation: true,
+      cliVersion: '2.96.2',
+      selfMutation: true,
+      codeBuildDefaults: {
+        rolePolicy: [
+          new PolicyStatement({
+            actions: [
+              "sts:AssumeRole",
+              "secretsmanager:GetSecretValue",
+              "secretsmanager:DescribeSecret",
+              "cloudformation:*",
+              "s3:*",
+            ],
+            resources: ['*'],
+          }),
+        ]
+      },
     });
 
     pipeline.addStage(new DevStage(this, 'Dev', {

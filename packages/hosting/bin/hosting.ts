@@ -10,4 +10,3 @@ new Pipeline(app, 'MySite', {
     region: 'eu-central-1',
   }
 });
-app.synth();
