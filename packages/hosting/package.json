@@ -9,7 +9,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "synth": "cdk synth -v -o ./cdk.out"
+    "synth": "cdk synth -v --trace --debug"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
