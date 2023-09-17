@@ -1,4 +1,4 @@
-import { SecretValue, Stack, StackProps, pipelines } from "aws-cdk-lib";
+import { Stack, StackProps, pipelines } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
@@ -8,8 +8,8 @@ export class Pipeline extends Stack {
 
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
       synth: new pipelines.ShellStep('Synth', {
-        input: pipelines.CodePipelineSource.gitHub('dalawwa/dawalnut', 'main', {
-          authentication: SecretValue.secretsManager('github-token-dawalnut'),
+        input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
+          connectionArn: process.env.CONNECTION_ARN!,
         }),
         installCommands: ['npm i -g npm@latest'],
         commands: [
