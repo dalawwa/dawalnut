@@ -7,16 +7,11 @@ export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const role = new Role(this, 'CodePipelineRole', {
-      assumedBy: new ServicePrincipal('codepipeline.amazonaws.com'),
-    });
-
-    role.addToPolicy(new PolicyStatement({
-      actions: ['sts:AssumeRole'],
-      resources: [process.env.LOOKUP_ROLE_ARN!],
-    }));
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
-      role,
+      role: new Role(this, "pipeline", {
+        roleName: "pipeline",
+        assumedBy: new ServicePrincipal("codepipeline.amazonaws.com")
+      }).withoutPolicyUpdates(),
       synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
