@@ -13,7 +13,7 @@ export class Pipeline extends Stack {
         }),
         commands: [
           'npm ci -w hosting',
-          'npm run build -w hosting',
+          'npm run build:hosting',
           'npx cdk synth -w hosting',
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
