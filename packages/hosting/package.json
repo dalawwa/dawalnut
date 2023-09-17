@@ -9,7 +9,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "synth": "cdk synth"
+    "synth": "npx cdk synth"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
