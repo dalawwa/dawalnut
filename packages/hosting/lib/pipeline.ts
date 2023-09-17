@@ -33,18 +33,8 @@ export class Pipeline extends Stack {
       },
     });
 
-    pipeline.addStage(new Stage(this, 'Dev', {
-      env: {
-        account: process.env.AWS_ACCOUNT!,
-        region: process.env.AWS_REGION!,
-      },
-    }));
+    pipeline.addStage(new Stage(this, 'Dev'));
 
-    pipeline.addStage(new Stage(this, 'Prod', {
-      env: {
-        account: process.env.AWS_ACCOUNT!,
-        region: process.env.AWS_REGION!,
-      },
-    }));
+    pipeline.addStage(new Stage(this, 'Prod'));
   }
 }
