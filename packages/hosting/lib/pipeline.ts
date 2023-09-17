@@ -49,7 +49,6 @@ export class Pipeline extends Stack {
             },
             build: {
               commands: [
-                'cd packages/hosting',
                 'npm run build',
                 'npm run synth',
               ],
