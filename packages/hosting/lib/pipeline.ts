@@ -2,7 +2,7 @@ import { Stack, StackProps, pipelines } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
-import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -12,6 +12,11 @@ export class Pipeline extends Stack {
       description: 'This is a custom role for codepipeline to assume',
     });
 
+    role.addToPolicy(new PolicyStatement({
+      actions: ['sts:AssumeRole'],
+      resources: ['*'],
+    }));
+    
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
       role,
       synth: new pipelines.ShellStep('Synth', {
