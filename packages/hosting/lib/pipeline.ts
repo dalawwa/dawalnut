@@ -3,7 +3,6 @@ import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
 import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import 'dotenv/config';
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -22,10 +21,6 @@ export class Pipeline extends Stack {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
-        env: {
-          AWS_ACCOUNT: process.env.AWS_ACCOUNT!,
-          AWS_REGION: process.env.AWS_REGION!,
-        },
         installCommands: ['npm i -g npm@9.6.7'],
         commands: [
           'node -v',
