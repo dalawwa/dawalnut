@@ -2,7 +2,6 @@ import { Stack, StackProps, pipelines } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
-import { CompositePrincipal, Effect, PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -12,10 +11,6 @@ export class Pipeline extends Stack {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
-        env: {
-          AWS_ACCOUNT: process.env.AWS_ACCOUNT!,
-          AWS_REGION: process.env.AWS_REGION!,
-        },
         installCommands: ['npm i -g npm@9.6.7'],
         commands: [
           'node -v',
@@ -28,6 +23,11 @@ export class Pipeline extends Stack {
       dockerEnabledForSynth: true
     });
 
-    pipeline.addStage(new DevStage(this, 'Dev', props));
+    pipeline.addStage(new DevStage(this, 'Dev', {
+      env: {
+        account: '765757105156',
+        region: 'eu-central-1',
+      }
+    }));
   }
 }

@@ -6,8 +6,8 @@ import 'dotenv/config';
 const app = new cdk.App();
 new Pipeline(app, 'MySite', {
   env: {
-    account: process.env.AWS_ACCOUNT,
-    region: process.env.AWS_REGION,
+    account: '765757105156',
+    region: 'eu-central-1',
   }
 });
 app.synth();
