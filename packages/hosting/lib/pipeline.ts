@@ -11,9 +11,15 @@ export class Pipeline extends Stack {
     const pipeline = new CodePipeline(this, 'Pipeline', {
       pipelineName: 'CdkPipeline',
       synth: new ShellStep('Synth', {
+        primaryOutputDirectory: 'packages/hosting/cdk.out',
         input: CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
+        env: {
+          'CONNECTION_ARN': process.env.CONNECTION_ARN!,
+          AWS_ACCOUNT: process.env.AWS_ACCOUNT!,
+          AWS_REGION: process.env.AWS_REGION!,
+        },
         installCommands: [
           'npm install -g npm@9.5.1',
         ],
