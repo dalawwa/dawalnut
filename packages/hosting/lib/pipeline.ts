@@ -12,9 +12,9 @@ export class Pipeline extends Stack {
           authentication: SecretValue.secretsManager('github-token-dawalnut'),
         }),
         commands: [
-          'pnpm i --frozen-lockfile',
-          'pnpm run build',
-          'pnpx cdk synth',
+          'npm ci -w hosting',
+          'npm run build -w hosting',
+          'npx cdk synth -w hosting',
         ],
       }),
     });
