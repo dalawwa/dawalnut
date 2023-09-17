@@ -11,9 +11,10 @@ export class Pipeline extends Stack {
         input: pipelines.CodePipelineSource.gitHub('dalawwa/dawalnut', 'main', {
           authentication: SecretValue.secretsManager('github-token-dawalnut'),
         }),
+        installCommands: ['npm i -g npm@latest'],
         commands: [
           'npm ci -w hosting',
-          'npm run build:hosting',
+          'npm run build -w hosting',
           'npx cdk synth -w hosting',
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
