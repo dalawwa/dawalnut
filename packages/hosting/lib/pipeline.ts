@@ -6,13 +6,13 @@ import { CompositePrincipal, Effect, PolicyStatement, Role, ServicePrincipal } f
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-    
+
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
       synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
-        installCommands: ['npm i -g npm@9.6.7'],
+        installCommands: ['npm i -g npm@9.6.7', 'npm install -g aws-cdk'],
         commands: [
           'node -v',
           'npm ci -w hosting',
