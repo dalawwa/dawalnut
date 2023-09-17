@@ -2,7 +2,6 @@ import { SecretValue, Stack, StackProps, pipelines } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
-import 'dotenv/config';
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -20,11 +19,6 @@ export class Pipeline extends Stack {
       }),
     });
 
-    pipeline.addStage(new DevStage(this, 'Dev', {
-      env: {
-        account: process.env.AWS_ACCOUNT,
-        region: process.env.AWS_REGION,
-      },
-    }));
+    pipeline.addStage(new DevStage(this, 'Dev'));
   }
 }
