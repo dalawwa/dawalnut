@@ -4,9 +4,7 @@
   "description": "my-website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:hosting": "npm run build -w hosting",
-    "synth:hosting": "npm run cdk synth -w hosting"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
     "packages/*",
