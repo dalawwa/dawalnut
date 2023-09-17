@@ -14,8 +14,8 @@ export class Pipeline extends Stack {
         installCommands: ['npm i -g npm@latest'],
         commands: [
           'npm ci -w hosting',
-          'npm run build -w hosting',
-          'npx cdk synth -w hosting',
+          'npm run build:hosting',
+          'npx cdk synth:hosting',
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
       }),
