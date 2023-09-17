@@ -7,7 +7,6 @@ export class Pipeline extends Stack {
     super(scope, id, props);
 
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
-      selfMutation: false,
       synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
@@ -15,7 +14,7 @@ export class Pipeline extends Stack {
         installCommands: ['npm i -g npm@9.6.7'],
         commands: [
           'node -v',
-          'npm ci -w hosting',
+          'npm ci',
           'npm run build -w hosting',
           'npm run synth -w hosting',
         ],
