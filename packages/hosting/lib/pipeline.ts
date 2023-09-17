@@ -24,9 +24,7 @@ export class Pipeline extends Stack {
           "s3:Abort*",
       ],
       effect: Effect.ALLOW,
-      resources: [
-          "*"
-      ],
+      resources: ["*"],
     });
 
     role.addToPolicy(
@@ -57,6 +55,6 @@ export class Pipeline extends Stack {
       dockerEnabledForSynth: true
     });
 
-    pipeline.addStage(new DevStage(this, 'Dev'));
+    pipeline.addStage(new DevStage(this, 'Dev', props));
   }
 }
