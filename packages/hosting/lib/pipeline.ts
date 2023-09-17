@@ -7,6 +7,7 @@ export class Pipeline extends Stack {
     super(scope, id, props);
 
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
+      selfMutation: false,
       synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
@@ -20,7 +21,6 @@ export class Pipeline extends Stack {
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
       }),
-      dockerEnabledForSynth: true
     });
 
     pipeline.addStage(new DevStage(this, 'Dev', {
