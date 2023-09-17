@@ -3,6 +3,7 @@ import { Construct } from "constructs";
 
 import { DevStage } from "./stage-dev";
 import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import 'dotenv/config';
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
