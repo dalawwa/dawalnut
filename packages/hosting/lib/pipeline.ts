@@ -7,7 +7,7 @@ export class Pipeline extends Stack {
     super(scope, id, props);
 
     const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
-      synth: new pipelines.CodeBuildStep('Synth', {
+      synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('dalawwa/dawalnut', 'main', {
           connectionArn: process.env.CONNECTION_ARN!,
         }),
@@ -20,9 +20,6 @@ export class Pipeline extends Stack {
         ],
         primaryOutputDirectory: 'packages/hosting/cdk.out',
       }),
-    });
-    pipeline.synthProject.role?.addManagedPolicy({
-      managedPolicyArn: 'arn:aws:iam::aws:policy/AdministratorAccess',
     });
 
     pipeline.addStage(new DevStage(this, 'Dev', {
