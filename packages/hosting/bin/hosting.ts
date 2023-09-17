@@ -3,4 +3,9 @@ import * as cdk from 'aws-cdk-lib';
 import { Pipeline } from '../lib/pipeline';
 
 const app = new cdk.App();
-new Pipeline(app, 'MySite');
+new Pipeline(app, 'MySite', {
+  env: {
+    account: process.env.AWS_ACCOUNT,
+    region: process.env.AWS_REGION,
+  }
+});
