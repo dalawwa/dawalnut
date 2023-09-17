@@ -1,8 +1,9 @@
-import { Stack, StackProps, aws_codepipeline_actions, aws_codebuild, Stage} from "aws-cdk-lib";
+import { Stack, StackProps, aws_codepipeline_actions, aws_codebuild} from "aws-cdk-lib";
 import { LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
 import { CodePipeline, ShellStep, CodePipelineSource } from "aws-cdk-lib/pipelines";
 import { Construct } from "constructs";
 import "dotenv/config"
+import { Stage } from "./stage";
 
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
