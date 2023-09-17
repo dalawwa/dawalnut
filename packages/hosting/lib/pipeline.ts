@@ -20,9 +20,11 @@ export class Pipeline extends Stack {
         commands: [
           'npm ci',
           'npm run build',
+          'echo ${CODEBUILD_SRC_DIR}',
+          'ls -la ${CODEBUILD_SRC_DIR}',
           'npm run synth',
         ],
-        primaryOutputDirectory: '${CODEBUILD_SRC_DIR}/packages/hosting/cdk.out'
+        primaryOutputDirectory: '${CODEBUILD_SRC_DIR}/cdk.out'
       }),
       codeBuildDefaults: {
         buildEnvironment: {
