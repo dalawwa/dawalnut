@@ -24,6 +24,7 @@ export class Pipeline extends Stack {
         'sts:*',
         's3:*',
         'cloudformation:*',
+        'ssm:*',
       ],
       resources: ['*'],
       effect: Effect.ALLOW
