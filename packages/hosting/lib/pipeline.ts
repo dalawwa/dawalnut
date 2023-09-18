@@ -4,11 +4,32 @@ import { CodePipeline, ShellStep, CodePipelineSource } from "aws-cdk-lib/pipelin
 import { Construct } from "constructs";
 import "dotenv/config"
 import { Stage } from "./stage";
+import { CompositePrincipal, Effect, PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 
 export class Pipeline extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
+
+    const role = new Role(this, 'Role', {
+      assumedBy: new CompositePrincipal(
+        new ServicePrincipal('codebuild.amazonaws.com'),
+        new ServicePrincipal('codepipeline.amazonaws.com'),
+      )
+    });
+
+    role.addToPolicy(new PolicyStatement({
+      actions: [
+        'codebuild:*',
+        'codepipeline:*',
+        'sts:*',
+        's3:*',
+        'cloudformation:*',
+      ],
+      resources: ['*'],
+      effect: Effect.ALLOW
+    }));
     const pipeline = new CodePipeline(this, 'Pipeline', {
+      role,
       pipelineName: 'CdkPipeline',
       synth: new ShellStep('Synth', {
         primaryOutputDirectory: 'packages/hosting/cdk.out',
